@@ -1,0 +1,48 @@
+{% extends 'layout/basic.html' %}
+
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Рубрика - {{ rubric }}{% endblock %}
+
+{% block searchform %}
+{% endblock %}
+
+{% block content %}
+<h2 class = 'mb-2'>{{ rubric }}</h2> <!--Название рубрики большим шрифтом-->
+<div class = 'container-fluid mb-2'>
+	<div class = 'row'>
+		<div class = 'col'>
+			&nbsp; <!--Тут у нас форма поиска, которая с помощью классов прижата к правому краю страницы-->
+		</div>
+		<form class = 'col-md-auto form-inline'> <!--form-inline укажет все элементы управления сделать в одну строку-->
+			{% bootstrap_form form show_label=False %}
+			{% bootstrap_button content='Найти' button_type='submit' %}
+		</form>
+	</div>
+</div>
+{% if bbs %} <!--Если есть контекст (объявления)-->
+<ul class = 'list-unstyled'>
+	{% for bb in bbs %} <!--Для всех объявлений в контексте-->
+	<li class = 'media my-5 p-3 border'>
+		{% url 'main:detail' rubric_pk=rubric.pk pk=bb.pk as url %} <!--ссылку на функцию detail где rubric_pk = rubric.pk а pk = bb.pk записать в переменную url-->
+		<a href="{{ url }}{{ all }}">
+			{% if bb.img %} <!--Если есть фотка--> 
+			<img src="{% thumbnail bb.image 'default' %}" class = 'mr-3'>
+			{% else %} <!--Если фотки нет, то просто использовтаь пустую пикчу-->
+			<img src="{% static 'main/empty.jpg' %}">
+			{% endif %}
+		</a>
+		<div class = 'media-body'>
+			<h3><a href="{{ url }}{{ all }}">{{ bb.title }}</a></h3> <!--Название-->
+			<div>{{ bb.content }}</div> <!--Описание-->
+			<p class = 'text-right font-weight-bold'>{{ bb.price }} руб.</p> <!--Цена-->
+			<p class = 'text-right fonr-italic'>{{ bb.created_at }}</p> <!--Когда создано-->
+		</div>
+	</li>
+	{% endfor %}
+</ul>
+{% bootstrap_pagination page url=keyword %}
+{% endif %}
+{% endblock %}

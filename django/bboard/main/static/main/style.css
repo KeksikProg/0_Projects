@@ -1,0 +1,16 @@
+header h1 {
+	background: url('bg.jpg') left / auto 100% no-repeat; /*Чтобы была картинка*/
+
+}
+
+.root {
+	font-size: larger; /*Делает гиперссылки на основные страницы большими*/
+}
+
+img.main-image {
+	width: 300px;
+}
+
+img.additional-image {
+	width: 180px;
+}

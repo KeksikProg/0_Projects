@@ -1,0 +1,20 @@
+{% extends 'layout/basic.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}Удаление объявления{% endblock %}</title>
+</head>
+<body>
+	{% block content %}
+	<h2>Удаление объявления</h2>
+	<p>Рубрика: {{ bb.rubric.name }}</p>
+	<p>Товар: {{ bb.title }}</p>
+	<p>{{ bb.content }}</p>
+	<p>Цена: {{ bb.price }}</p>
+	<form method = 'post'>
+		{% csrf_token %} <!-- если я не ошибаюсь, это команда нужна для джанго, для дополнитекльной безопасности -->
+		<input type="submit" value="Удалить">
+	</form>
+	{% endblock %}
+</body>
+</html>

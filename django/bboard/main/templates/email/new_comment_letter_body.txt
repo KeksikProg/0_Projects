@@ -1,0 +1,6 @@
+Уважаемый {{ author }}
+
+Вы получили новый комментарий под вашим объявлением!
+Его оставил {{ comment.author }}
+Текст комментария: {{ comment.content }}
+Ссылка на объявление: {{ host }}{% url 'main:detail' rubric_pk=comment.bb.rubric.pk pk=comment.bb.pk %}

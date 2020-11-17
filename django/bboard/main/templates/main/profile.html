@@ -1,0 +1,38 @@
+{% extends 'layout/basic.html' %}
+
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<h2>Профиль пользователя {{ user.username }}</h2>
+<p><a href="{% url 'main:profile_bb_add' %}">Добавить объявление</a></p>
+{% if bbs %} <!--Если есть контекст (объявления)-->
+<ul class = 'list-unstyled'>
+	{% for bb in bbs %} <!--Для всех объявлений в контексте-->
+	<li class = 'media my-5 p-3 border'>
+		{% url 'main:detail' rubric_pk=rubric.pk pk=bb.pk as url %} <!--ссылку на функцию detail где rubric_pk = rubric.pk а pk = bb.pk записать в переменную url-->
+		<a href="{% url 'main:detail' rubric_pk=bb.rubric.pk  pk=bb.pk %}">
+			{% if bb.img %} <!--Если есть фотка--> 
+			<img src="{% thumbnail bb.image 'default' %}" class = 'mr-3'>
+			{% else %} <!--Если фотки нет, то просто использовтаь пустую пикчу-->
+			<img src="{% static 'main/empty.jpg' %}">
+			{% endif %}
+		</a>
+		<div class = 'media=body'>
+			<h3><a href="{% url 'main:detail' rubric_pk=bb.rubric.pk  pk=bb.pk %}">{{ bb.title }}</a></h3> <!--Название-->
+			<div>{{ bb.content }}</div> <!--Описание-->
+			<p class = 'text-right font-weight-bold'>{{ bb.price }} руб.</p> <!--Цена-->
+			<p class = 'text-right fonr-italic'>{{ bb.created_at }}</p> <!--Когда создано-->
+			<p class = 'text-right mt-2'>
+				<a href="{% url 'main:profile_bb_change' pk=bb.pk %}">Изменить</a>
+				<a href="{% url 'main:profile_bb_delete' pk=bb.pk %}">Удалить</a>
+			</p>
+		</div>
+	</li>
+	{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

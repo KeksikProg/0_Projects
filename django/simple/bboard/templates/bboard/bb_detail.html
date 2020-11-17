@@ -1,0 +1,16 @@
+{% extends 'layout/basic.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ bb.title }} - Объявление</title>
+</head>
+<body>
+	{% block title %}{{ bb.title }}{% endblock %}
+	{% block content %}
+	<p>Рубрика: {{ bb.rubric.name }}</p>
+	<h2>{{ bb.title }}</h2>
+	<p>{{ bb.content }}</p>
+	<p>Цена: {{ bb.price }}</p>
+	{% endblock %}
+</body>
+</html>

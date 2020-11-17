@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content = 'text/html' charset="utf-8">
+		<title>Главная - доска объявлений</title>
+	</head>
+	<body>
+		<h1>Объявления</h1>
+		{% extends 'layout/basic.html' %}
+		
+		{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+				<li {% if message.tags %} class = '{{ message.tags }}' {% endif %} >
+					{{ message }}
+				</li>
+			</ul>
+				{% endfor %}
+		{% endif %}
+
+		{% block content %}
+		{% for bb in bbs %}
+			<div>
+				<h2><a href="{% url 'detail' bb.pk %}">{{ bb.title }}</a></h2>
+				<p><a href="{% url 'edit' bb.pk %}">Изменить</a></p>
+				<p><a href="{% url 'delete' bb.pk %}">Удалить</a></p>
+				<p>{{ bb.content }}</p>
+				<p><a href="/bboard/{{ bb.rubric.pk }}">{{ bb.rubric.name }}</a></p>
+				<p>{{ bb.published|date:"d.m.Y H:i:s" }}</p>
+			</div>
+		{% endfor %}
+		<div>
+			</ul>
+				{% if page.has_previous %}
+				<a href="?page={{ page.previous_page_number }}">&lt;</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				{% endif %}
+				Страница №{{ page.number }} из {{ page.paginator.num_pages }}
+				{% if page.has_next %}
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href="?page= {{ page.next_page_number }}">&gt;</a>
+				{% endif %}
+			</div>
+		{% endblock %}
+	</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends 'layout/basic.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}Вход{% endblock %}</title>
+</head>
+<body>
+	{% block content %}
+	<h2>Вход</h2>
+	{% if user.is_authenticated %} <!--Так как просто перенаправление пользователя, который уже вошёл, со страницы входа такое себе, мы используем другой метод, мы просто проверяем вошёл ли пользователь и если да, то пишем ему, что он уже зашёл -->
+	<p>Вы уже выполнили вход на сайт. Удачного времяприпровождения</p>
+	{% else %}
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="hidden" name="next" value="{{ next }}"> <!--Это скрытое поле, которое нужно для перенаправления пользователя после входа-->
+		<input type="submit" value="Войти">
+	</form>
+	{% endif %}
+	{% endblock %}
+</body>
+</html>

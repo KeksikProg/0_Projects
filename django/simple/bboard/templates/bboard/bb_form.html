@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+	<title>Испрвление объявления - Доска объявлений</title>
+</head>
+<body>
+	{% extends 'layout/basic.html' %}
+
+	{% block title %}Исправление объявления{% endblock %}
+
+	{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+				<li {% if message.tags %} class = '{{ message.tags }}' {% endif %} >
+					{{ message }}
+				</li>
+			</ul>
+				{% endfor %}
+		{% endif %}
+	
+	{% block content %}
+	<h1>Исправление объявления</h1>
+	<form method="post"> <!-- тут у нас метод пост, значит будет принимать данные от пользователя -->
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value='Исправить'>
+	</form>
+	{% endblock %}
+</body>
+</html>

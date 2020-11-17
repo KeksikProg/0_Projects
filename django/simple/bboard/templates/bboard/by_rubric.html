@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{% extends 'layout/basic.html' %}
+		<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+		<title>{{ current_rubric.name }} - Доска объявлений</title>
+	</head>
+	<body>
+		
+		{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+				<li {% if message.tags %} class = '{{ message.tags }}' {% endif %} >
+					{{ message }}
+				</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+
+		<h1>Объявления</h1>
+		{% block title %}{{ current_rubric.name }}{% endblock %}
+		{% block content %}
+		<h2>Рубрика: {{ current_rubric.name }}</h2>
+		{% for bb in bbs %}
+			<div>
+				<h2><a href="{% url 'detail' bb.pk %}">{{ bb.title }}</a></h2>
+				<p><a href="{% url 'edit' bb.pk %}">Изменить</a></p>
+				<p><a href="{% url 'delete' bb.pk %}">Удалить</a></p>
+				<p>{{ bb.content }}</p>
+				<p>{{ bb.published|date:"d.m.Y H:i:s" }}</p>
+			</div>
+		{% endfor %}
+		{% endblock %}
+	</body>
+</html>
